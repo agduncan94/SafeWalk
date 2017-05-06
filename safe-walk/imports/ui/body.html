@@ -1,0 +1,35 @@
+<body>
+  <div class="row no-margin">
+    <div class="col m2 l2 teal darken-3 full-height pinned">
+      <img class="logo" src="/images/logo.png" alt="logo">
+      <h4 class="white-text center">WalkSafe</h4>
+      {{> loginButtons}}
+      <div class="collection no-border">
+       <a href="trips" class="collection-item teal darken-3 white-text no-border">All Trips</a>
+       <a href="about" class="collection-item teal darken-3 white-text no-border">About</a>
+     </div>
+   </div>
+   <div class="col m10 l10 blue-grey lighten-4 full-height float-right">
+    <h1 class="flow-text">{{formatDate}}</h1>
+    <div class="card">
+    <form class="new-trip card-content">
+        <p>Departue Time</p>
+        <input type="text" name="dTime"/>
+        <p>Capacity</p>
+        <input type="text" name="capacity"/>
+        <p>Travel Mode</p>
+        <input type="text" name="travelMode"/>
+        <input class="btn waves-effect waves-teal" type="submit" value="Add Trip">
+      </form>
+    </div>
+    {{#each trips}}
+        {{> trip}}
+      {{/each}}
+    </div>
+</div>
+<footer class="page-footer teal darken-5">
+  <div class="footer-copyright">
+    <div class="container"></div>
+  </div>         
+</footer>
+</body>

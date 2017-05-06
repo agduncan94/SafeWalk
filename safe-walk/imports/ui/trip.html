@@ -1,0 +1,13 @@
+<template name="trip">
+  <div class="card">
+  	<div class="card-content">
+  	<p>Departure time: {{dTime}}</p>
+  	<p>Max Capacity: {{capacity}}</p>
+    <p>Travel Mode: {{travelMode}}</p>
+  	<p>Created by: {{username}}</p>
+  	{{#if isOwner}}
+  	<button class="delete btn">&times;</button>
+  	{{/if}}
+  	</div>
+  </div>
+</template>
