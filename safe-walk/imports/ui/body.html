@@ -11,21 +11,39 @@
    </div>
    <div class="col m10 l10 blue-grey lighten-4 full-height float-right">
     <h1 class="flow-text">{{formatDate}}</h1>
-    <div class="card">
-    <form class="new-trip card-content">
-        <p>Departue Time</p>
-        <input type="text" name="dTime"/>
-        <p>Capacity</p>
-        <input type="text" name="capacity"/>
-        <p>Travel Mode</p>
-        <input type="text" name="travelMode"/>
-        <input class="btn waves-effect waves-teal" type="submit" value="Add Trip">
-      </form>
-    </div>
+    <ul class="collapsible hoverable" data-collapsible="accordion">
+      <li>
+        <div class="collapsible-header flow-text"><i class="material-icons">add</i>Add a trip</div>
+        <div class="collapsible-body white">
+          <form class="new-trip card-content">
+            <div class="input-group clockpicker col s12" data-placement="right" data-align="top" data-autoclose="true">
+              <label>Departure Time</label>
+              <input type="text" name="dTime" class="form-control">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+              </span>
+            </div>
+            <div class="input-field col s12">
+              <select name="travelMode">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="Shuttle">Shuttle</option>
+                <option value="Walk">Walk</option>
+              </select>
+              <label>Travel Mode</label>
+            </div>
+            <div class="input-field col s12">
+              <input type="text" name="capacity"/>
+              <label>Max Capacity</label>
+            </div>
+            <input class="btn waves-effect waves-teal" type="submit" value="Add Trip">
+          </form>
+        </div>
+      </li>
+    </ul>
     {{#each trips}}
-        {{> trip}}
-      {{/each}}
-    </div>
+    {{> trip}}
+    {{/each}}
+  </div>
 </div>
 <footer class="page-footer teal darken-5">
   <div class="footer-copyright">

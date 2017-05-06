@@ -12,16 +12,14 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   'trips.insert'(dTime, capacity, travelMode) {
-    // check(dTime, String);
-    // check(capacity, String);
- 
     if (! Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
     }
- 
+
     Trips.insert({
       dTime: dTime,
       capacity: capacity,
+      currCapacity: 0,
       travelMode: travelMode,
       createdAt: new Date(),
       owner: Meteor.userId(),
@@ -30,7 +28,12 @@ Meteor.methods({
   },
   'trips.remove'(tripId) {
     check(tripId, String);
- 
     Trips.remove(tripId);
+  },
+  'trips.update'(tripId, newCapacity) {
+    check(tripId, String);
+    Trips.update(tripId, {
+      $set: { currCapacity: newCapacity },
+    });
   },
 });
