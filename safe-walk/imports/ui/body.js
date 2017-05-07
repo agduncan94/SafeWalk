@@ -51,14 +51,9 @@ Template.body.events({
   'submit .update-user'(event) {
     event.preventDefault();
     const target = event.target;
-    const firstName = target.firstName.value;
-    const lastName = target.lastName.value;
     const homeAddress = target.homeAddress.value;
-    Meteor.call('trips.updateUser', firstName, lastName, homeAddress);
+    Meteor.call('trips.updateUser', homeAddress);
     $('#modal1').modal('close');
-  },
-  'click #editUserButton'(event) {
-    $('#firstNameInput').value = "hello";
   },
 });
 

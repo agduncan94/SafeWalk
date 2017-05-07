@@ -13,8 +13,6 @@ if (Meteor.isServer) {
     user.admin = false;
     user.currTrip = null;
     user.homeAddress = null;
-    user.firstName = null;
-    user.lastName = null;
 
     if (options.profile) {
       user.profile = options.profile;
@@ -29,8 +27,6 @@ if (Meteor.isServer) {
       currTrip: 1,
       admin: 1,
       homeAddress:1,
-      firstName:1,
-      lastName:1,
     }});
   });
 }
@@ -63,15 +59,13 @@ Meteor.methods({
     check(tripId, String);
     Trips.remove(tripId);
   },
-  'trips.update'(tripId, newCapacity, newUsers, address, username, firstName, lastName) {
+  'trips.update'(tripId, newCapacity, newUsers, address, username) {
     check(tripId, String);
     // create new user object and push
     var newUser = {
       userId: Meteor.userId(),
       username: username,
       homeAddress: address,
-      firstName: firstName,
-      lastName: lastName,
     }
     newUsers.push(newUser);
 
@@ -103,10 +97,10 @@ Meteor.methods({
       $set: { currTrip: null }
     });
   },
-  'trips.updateUser'(firstName, lastName, homeAddress) {
+  'trips.updateUser'(homeAddress) {
 
     Meteor.users.update(Meteor.userId(), {
-      $set: { firstName: firstName, lastName: lastName, homeAddress: homeAddress, }
+      $set: { homeAddress: homeAddress, }
     });
   },
 });
