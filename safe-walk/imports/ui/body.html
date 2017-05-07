@@ -1,9 +1,10 @@
 <body>
   <div class="row no-margin">
-    <div class="col m2 l2 green lighten-2 full-height pinned">
+    <div class="col m2 l2 green lighten-2 full-height pinned  hide-on-med-and-down">
       <img class="circle responsive-img" src="/images/logo.png" alt="logo">
       <h4 class="white-text center">WalkSafe</h4>
-       {{> Cas_Login }}
+      {{> Cas_Login }}
+      {{#if currentUser }}
       <div class="card teal hoverable">
         <div class="card-content white-text">
           <p class="valign-wrapper"><i class="small material-icons">perm_identity</i>{{currentUser.profile.name}}</p>
@@ -11,6 +12,7 @@
           <a id="editUserButton" class="right btn-floating waves-effect waves-light white black-text" href="#modal1"><i class="edit-button material-icons">mode_edit</i></a>
         </div>
       </div>
+      {{/if}}
 
       {{#if currTripSet currentUser.currTrip}}
       <div class="card teal hoverable">
@@ -23,63 +25,81 @@
       </div>
       {{/if}}
     </div>
-    <div class="col m10 l10 green lighten-4 full-height float-right">
-      <h1 class="flow-text">{{formatDate}}</h1>
-      <!-- {{#if isAdmin currentUser}} -->
-      <ul class="collapsible hoverable" data-collapsible="accordion">
-        <li>
-          <div class="collapsible-header flow-text"><i class="material-icons">add</i>Add a trip</div>
-          <div class="collapsible-body white">
-            <form class="new-trip card-content">
-              <div class="input-group clockpicker col s12" data-placement="right" data-align="top" data-autoclose="true">
-                <label>Departure Time</label>
-                <input type="text" name="dTime" class="form-control">
-                <span class="input-group-addon">
-                  <span class="glyphicon glyphicon-time"></span>
-                </span>
-              </div>
-              <div class="input-field col s12">
-                <select name="travelMode">
-                  <option value="" disabled selected>Choose your option</option>
-                  <option value="Shuttle">Shuttle</option>
-                  <option value="Walk">Walk</option>
-                </select>
-                <label>Travel Mode</label>
-              </div>
-              <div class="input-field col s12">
-                <input type="text" name="capacity"/>
-                <label>Max Capacity</label>
-              </div>
-              <div class="input-field col s12">
-                <input type="text" name="startingAddress"/>
-                <label>Starting Address</label>
-              </div>
-              <input class="btn waves-effect waves-teal" type="submit" value="Add Trip">
-            </form>
-          </div>
-        </li>
-      </ul>
-      <!-- {{/if}} -->
-      {{#each trips}}
-      {{> trip}}
-      {{/each}}
-    </div>
-  </div>
-  <footer class="page-footer green lighten-2">
-    <div class="footer-copyright">
-      <div class="container"></div>
-    </div>         
-  </footer>
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4>User Account</h4>
-      <form class="update-user card-content">
-        <div class="input-field col s12">
-          <input id="homeAddressInput" type="text" name="homeAddress"/>
-          <label>Home Address</label>
+    <div class="m12 hide-on-large-only green lighten-4">
+     <nav class="green lighten-2">
+      <div class="nav-wrapper">
+        <img class="left circle responsive-img navBarIcon " src="/images/logo.png" alt="logo">
+        <span class="left flow-text">WalkSafe</span>
+        <span class="right">{{> Cas_Login }}</span>
         </div>
-        <input class="btn waves-effect waves-teal" type="submit" value="Update User">
-      </form>
-    </div>
+    </nav>
+    {{#if currTripSet currentUser.currTrip}}
+      <div class="card hoverable">
+        <div class="card-content">
+          <span class="card-title">My Trip</span>
+          <p class="valign-wrapper"><i class="small material-icons">schedule</i>{{getTripTimeById currentUser.currTrip}}</p>
+          <p class="valign-wrapper"><i class="small material-icons">supervisor_account</i>{{getTripTypeById currentUser.currTrip}}</p>
+          <p class="valign-wrapper"><i class="small material-icons">navigation</i>{{getTripStartingAddressById currentUser.currTrip}}</p>
+        </div>
+      </div>
+      {{/if}}
   </div>
+  <div class="col s12 m12 l10 green lighten-4 full-height float-right">
+
+    <h1 class="flow-text">{{formatDate}}</h1>
+    <ul class="collapsible hoverable" data-collapsible="accordion">
+      <li>
+        <div class="collapsible-header flow-text"><i class="material-icons">add</i>Add a trip</div>
+        <div class="collapsible-body white">
+          <form class="new-trip card-content">
+            <div class="input-group clockpicker col s12" data-placement="right" data-align="top" data-autoclose="true">
+              <label>Departure Time</label>
+              <input type="text" name="dTime" class="form-control">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+              </span>
+            </div>
+            <div class="input-field col s12">
+              <select name="travelMode">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="Shuttle">Shuttle</option>
+                <option value="Walk">Walk</option>
+              </select>
+              <label>Travel Mode</label>
+            </div>
+            <div class="input-field col s12">
+              <input type="text" name="capacity"/>
+              <label>Max Capacity</label>
+            </div>
+            <div class="input-field col s12">
+              <input type="text" name="startingAddress"/>
+              <label>Starting Address</label>
+            </div>
+            <input class="btn waves-effect waves-teal" type="submit" value="Add Trip">
+          </form>
+        </div>
+      </li>
+    </ul>
+    {{#each trips}}
+    {{> trip}}
+    {{/each}}
+  </div>
+</div>
+<footer class="page-footer green lighten-2">
+  <div class="footer-copyright">
+    <div class="container"></div>
+  </div>         
+</footer>
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>User Account</h4>
+    <form class="update-user card-content">
+      <div class="input-field col s12">
+        <input id="homeAddressInput" type="text" name="homeAddress"/>
+        <label>Home Address</label>
+      </div>
+      <input class="btn waves-effect waves-teal" type="submit" value="Update User">
+    </form>
+  </div>
+</div>
 </body>
