@@ -5,11 +5,12 @@
   	<p>Capacity: {{currCapacity}}/{{capacity}}</p>
     <p>Travel Mode: {{travelMode}}</p>
   	<p>Created by: {{username}}</p>
-    <!-- {{#if isUser}} -->
-    {{#if hasSpotsLeft}}
+    {{#if showBook currentUser}}
     <button class="btn btn-large register">Book</button>
     {{/if}}
-    <!-- {{/if}} -->
+    {{#if showDeregister}}
+    <button class="btn btn-large deregister">Deregister</button>
+    {{/if}}
   	{{#if isOwner}}
   	<button class="right delete btn-floating btn-large"><i class="material-icons">delete</i></button>
   	{{/if}}

@@ -8,6 +8,30 @@ if (Meteor.isServer) {
   Meteor.publish('trips', function tripsPublication() {
     return Trips.find();
   });
+  Accounts.onCreateUser((options, user) => {
+    user.admin = true;
+    user.currTrip = null;
+
+    if (options.profile) {
+      user.profile = options.profile;
+    }
+
+    return user;
+  });
+
+  Meteor.publish('users', function() {
+    if(!this.userId) return null;
+    return Meteor.users.find(this.userId, {fields: {
+      currTrip: 1,
+      admin: 1,
+    }});
+  });
+}
+
+if (Meteor.isClient) {
+  Deps.autorun(function(){
+    Meteor.subscribe('users');
+  });
 }
 
 Meteor.methods({
@@ -21,6 +45,7 @@ Meteor.methods({
       capacity: capacity,
       currCapacity: 0,
       travelMode: travelMode,
+      users: [],
       createdAt: new Date(),
       owner: Meteor.userId(),
       username: Meteor.user().username,
@@ -30,10 +55,25 @@ Meteor.methods({
     check(tripId, String);
     Trips.remove(tripId);
   },
-  'trips.update'(tripId, newCapacity) {
+  'trips.update'(tripId, newCapacity, newUsers) {
     check(tripId, String);
+    newUsers.push(Meteor.userId());
     Trips.update(tripId, {
-      $set: { currCapacity: newCapacity },
+      $set: { currCapacity: newCapacity, users: newUsers},
+    });
+    Meteor.users.update(Meteor.userId(), {
+      $set: { currTrip: tripId }
+    });
+  },
+  'trips.deregister'(tripId, newCapacity, newUsers) {
+    check(tripId, String);
+    var index = newUsers.indexOf(Meteor.userId());
+    newUsers.splice(index, 1);
+    Trips.update(tripId, {
+      $set: { currCapacity: newCapacity, users: newUsers},
+    });
+    Meteor.users.update(Meteor.userId(), {
+      $set: { currTrip: null }
     });
   },
 });
