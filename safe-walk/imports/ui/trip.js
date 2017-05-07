@@ -60,4 +60,7 @@ Template.trip.helpers({
   spotsRemaining() {
   	return this.capacity - this.currCapacity;
   },
+  isShuttle(type) {
+    return type === "Shuttle";
+  }
 });
