@@ -23,6 +23,9 @@ Template.body.helpers({
   getTripTimeById(tripId) {
     return Trips.findOne({"_id": tripId}, {}).dTime;
   },
+  getTripStartingAddressById(tripId) {
+    return Trips.findOne({"_id": tripId}, {}).startingAddress;
+  },
   currTripSet(tripId){
     return tripId !== null;
   },
@@ -38,10 +41,12 @@ Template.body.events({
     const dTime = target.dTime.value;
     const capacity = target.capacity.value;
     const travelMode = target.travelMode.value;
-    Meteor.call('trips.insert', dTime, capacity, travelMode);
+    const startingAddress = target.startingAddress.value;
+    Meteor.call('trips.insert', dTime, capacity, travelMode, startingAddress);
     target.dTime.value = '';
     target.capacity.value = '';
     target.travelMode.value = '';
+    target.startingAddress.value = '';
   },
   'submit .update-user'(event) {
     event.preventDefault();

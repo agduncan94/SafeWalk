@@ -25,6 +25,8 @@
           {{getTripTimeById currentUser.currTrip}}
           <p>Mode:</p>
           {{getTripTypeById currentUser.currTrip}}
+          <p>Starting Location:</p>
+          {{getTripStartingAddressById currentUser.currTrip}}
         </div>
       </div>
       {{/if}}
@@ -55,6 +57,10 @@
               <div class="input-field col s12">
                 <input type="text" name="capacity"/>
                 <label>Max Capacity</label>
+              </div>
+              <div class="input-field col s12">
+                <input type="text" name="startingAddress"/>
+                <label>Starting Address</label>
               </div>
               <input class="btn waves-effect waves-teal" type="submit" value="Add Trip">
             </form>

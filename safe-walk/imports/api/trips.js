@@ -10,7 +10,7 @@ if (Meteor.isServer) {
   });
   
   Accounts.onCreateUser((options, user) => {
-    user.admin = true;
+    user.admin = false;
     user.currTrip = null;
     user.homeAddress = null;
     user.firstName = null;
@@ -42,7 +42,7 @@ if (Meteor.isClient) {
 }
 
 Meteor.methods({
-  'trips.insert'(dTime, capacity, travelMode) {
+  'trips.insert'(dTime, capacity, travelMode, startingAddress) {
     if (! Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
     }
@@ -52,6 +52,7 @@ Meteor.methods({
       capacity: capacity,
       currCapacity: 0,
       travelMode: travelMode,
+      startingAddress: startingAddress,
       users: [],
       createdAt: new Date(),
       owner: Meteor.userId(),

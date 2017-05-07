@@ -1,7 +1,7 @@
 <template name="trip">
   <div class="card hoverable ">
   	<div class="card-content">
-      <span class="card-title">{{travelMode}} at {{dTime}}</span>
+      <span class="card-title">{{travelMode}} at {{dTime}} from {{startingAddress}}</span>
       <span class="chip">{{currCapacity}}/{{capacity}} Spots Taken</span>
       <p>Volunteer {{username}}</p>
       {{#if isNotAdmin currentUser}}
