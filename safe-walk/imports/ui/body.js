@@ -17,6 +17,18 @@ Template.body.helpers({
   formatDate() {
     return moment(new Date()).format("dddd, MMMM Do YYYY");
   },
+  getTripTypeById(tripId) {
+    return Trips.findOne({"_id": tripId}, {}).travelMode;
+  },
+  getTripTimeById(tripId) {
+    return Trips.findOne({"_id": tripId}, {}).dTime;
+  },
+  currTripSet(tripId){
+    return tripId !== null;
+  },
+  isAdmin(currentUser) {
+    return currentUser.admin;
+  },
 });
 
 Template.body.events({
@@ -31,13 +43,25 @@ Template.body.events({
     target.capacity.value = '';
     target.travelMode.value = '';
   },
+  'submit .update-user'(event) {
+    event.preventDefault();
+    const target = event.target;
+    const firstName = target.firstName.value;
+    const lastName = target.lastName.value;
+    const homeAddress = target.homeAddress.value;
+    Meteor.call('trips.updateUser', firstName, lastName, homeAddress);
+    $('#modal1').modal('close');
+  },
+  'click #editUserButton'(event) {
+    $('#firstNameInput').value = "hello";
+  },
 });
 
 $(document).ready(function() {
   $('select').material_select();
   $('.clockpicker').clockpicker()
   .find('input').change(function(){
-    // TODO: time changed
     console.log(this.value);
   });
+  $('.modal').modal();
 });

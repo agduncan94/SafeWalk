@@ -7,61 +7,89 @@
       <div class="card teal hoverable">
         <div class="card-content white-text">
           <span class="card-title">User Info</span>
+          <a id="editUserButton" class="btn-flat waves-effect waves-light" href="#modal1"><i class="material-icons">mode_edit</i></a>
           <hr>
-          <p>Username: {{currentUser.username}}</p>
+          <p>Username:</p>
+          {{currentUser.username}}
           <p>Address:</p>
-          <p>Email:</p>
+          {{currentUser.homeAddress}}
         </div>
       </div>
 
+      {{#if currTripSet currentUser.currTrip}}
       <div class="card teal hoverable">
         <div class="card-content white-text">
           <span class="card-title">My Trip</span>
           <hr>
           <p>Departure Time:</p>
+          {{getTripTimeById currentUser.currTrip}}
           <p>Mode:</p>
+          {{getTripTypeById currentUser.currTrip}}
         </div>
       </div>
-   </div>
-   <div class="col m10 l10 green lighten-4 full-height float-right">
-    <h1 class="flow-text">{{formatDate}}</h1>
-    <ul class="collapsible hoverable" data-collapsible="accordion">
-      <li>
-        <div class="collapsible-header flow-text"><i class="material-icons">add</i>Add a trip</div>
-        <div class="collapsible-body white">
-          <form class="new-trip card-content">
-            <div class="input-group clockpicker col s12" data-placement="right" data-align="top" data-autoclose="true">
-              <label>Departure Time</label>
-              <input type="text" name="dTime" class="form-control">
-              <span class="input-group-addon">
-                <span class="glyphicon glyphicon-time"></span>
-              </span>
-            </div>
-            <div class="input-field col s12">
-              <select name="travelMode">
-                <option value="" disabled selected>Choose your option</option>
-                <option value="Shuttle">Shuttle</option>
-                <option value="Walk">Walk</option>
-              </select>
-              <label>Travel Mode</label>
-            </div>
-            <div class="input-field col s12">
-              <input type="text" name="capacity"/>
-              <label>Max Capacity</label>
-            </div>
-            <input class="btn waves-effect waves-teal" type="submit" value="Add Trip">
-          </form>
-        </div>
-      </li>
-    </ul>
-    {{#each trips}}
-    {{> trip}}
-    {{/each}}
+      {{/if}}
+    </div>
+    <div class="col m10 l10 green lighten-4 full-height float-right">
+      <h1 class="flow-text">{{formatDate}}</h1>
+      <!-- {{#if isAdmin currentUser}} -->
+      <ul class="collapsible hoverable" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header flow-text"><i class="material-icons">add</i>Add a trip</div>
+          <div class="collapsible-body white">
+            <form class="new-trip card-content">
+              <div class="input-group clockpicker col s12" data-placement="right" data-align="top" data-autoclose="true">
+                <label>Departure Time</label>
+                <input type="text" name="dTime" class="form-control">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-time"></span>
+                </span>
+              </div>
+              <div class="input-field col s12">
+                <select name="travelMode">
+                  <option value="" disabled selected>Choose your option</option>
+                  <option value="Shuttle">Shuttle</option>
+                  <option value="Walk">Walk</option>
+                </select>
+                <label>Travel Mode</label>
+              </div>
+              <div class="input-field col s12">
+                <input type="text" name="capacity"/>
+                <label>Max Capacity</label>
+              </div>
+              <input class="btn waves-effect waves-teal" type="submit" value="Add Trip">
+            </form>
+          </div>
+        </li>
+      </ul>
+      <!-- {{/if}} -->
+      {{#each trips}}
+      {{> trip}}
+      {{/each}}
+    </div>
   </div>
-</div>
-<footer class="page-footer green lighten-2">
-  <div class="footer-copyright">
-    <div class="container"></div>
-  </div>         
-</footer>
+  <footer class="page-footer green lighten-2">
+    <div class="footer-copyright">
+      <div class="container"></div>
+    </div>         
+  </footer>
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>User Account</h4>
+      <form class="update-user card-content">
+        <div class="input-field col s12">
+          <input id="firstNameInput" type="text" name="firstName"/>
+          <label>First Name</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="lastNameInput" type="text" name="lastName"/>
+          <label>Last Name</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="homeAddressInput" type="text" name="homeAddress"/>
+          <label>Home Address</label>
+        </div>
+        <input class="btn waves-effect waves-teal" type="submit" value="Update User">
+      </form>
+    </div>
+  </div>
 </body>

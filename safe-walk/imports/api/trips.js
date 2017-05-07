@@ -8,9 +8,13 @@ if (Meteor.isServer) {
   Meteor.publish('trips', function tripsPublication() {
     return Trips.find();
   });
+  
   Accounts.onCreateUser((options, user) => {
     user.admin = true;
     user.currTrip = null;
+    user.homeAddress = null;
+    user.firstName = null;
+    user.lastName = null;
 
     if (options.profile) {
       user.profile = options.profile;
@@ -24,6 +28,9 @@ if (Meteor.isServer) {
     return Meteor.users.find(this.userId, {fields: {
       currTrip: 1,
       admin: 1,
+      homeAddress:1,
+      firstName:1,
+      lastName:1,
     }});
   });
 }
@@ -55,9 +62,18 @@ Meteor.methods({
     check(tripId, String);
     Trips.remove(tripId);
   },
-  'trips.update'(tripId, newCapacity, newUsers) {
+  'trips.update'(tripId, newCapacity, newUsers, address, username, firstName, lastName) {
     check(tripId, String);
-    newUsers.push(Meteor.userId());
+    // create new user object and push
+    var newUser = {
+      userId: Meteor.userId(),
+      username: username,
+      homeAddress: address,
+      firstName: firstName,
+      lastName: lastName,
+    }
+    newUsers.push(newUser);
+
     Trips.update(tripId, {
       $set: { currCapacity: newCapacity, users: newUsers},
     });
@@ -67,13 +83,29 @@ Meteor.methods({
   },
   'trips.deregister'(tripId, newCapacity, newUsers) {
     check(tripId, String);
-    var index = newUsers.indexOf(Meteor.userId());
+
+    // Remove user with given id
+    var index = -1;
+    for(var i = 0, len = newUsers.length; i < len; i++) {
+      if (newUsers[i].userId === Meteor.userId()) {
+        index = i;
+        break;
+      }
+    }
     newUsers.splice(index, 1);
+
+    // need to find a new way to find index
     Trips.update(tripId, {
       $set: { currCapacity: newCapacity, users: newUsers},
     });
     Meteor.users.update(Meteor.userId(), {
       $set: { currTrip: null }
+    });
+  },
+  'trips.updateUser'(firstName, lastName, homeAddress) {
+
+    Meteor.users.update(Meteor.userId(), {
+      $set: { firstName: firstName, lastName: lastName, homeAddress: homeAddress, }
     });
   },
 });

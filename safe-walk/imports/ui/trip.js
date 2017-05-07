@@ -13,7 +13,7 @@ Template.trip.events({
   'click .register'() {
   	var newCapacity = this.currCapacity+1;
   	var newUsers = this.users;
-  	Meteor.call('trips.update', this._id, newCapacity, newUsers);
+  	Meteor.call('trips.update', this._id, newCapacity, newUsers, Meteor.user().homeAddress, Meteor.user().username, Meteor.user().firstName,  Meteor.user().lastName);
    	Materialize.toast('Spot requested', 4000)
   },
   'click .deregister'() {
@@ -29,10 +29,35 @@ Template.trip.helpers({
     return this.owner === Meteor.userId();
   },
   showDeregister() {
-  	return this.users.includes(Meteor.userId());
+  	var index = -1;
+    for(var i = 0, len = this.users.length; i < len; i++) {
+      if (this.users[i].userId === Meteor.userId()) {
+        index = i;
+        break;
+      }
+    }
+     return index !== -1;
   },
   showBook(currentUser) {
-  	console.log(currentUser);
-  	return (this.currCapacity < this.capacity) && !(this.users.includes(Meteor.userId())) && (currentUser.currTrip === null);
-  }
+  	var index = -1;
+    for(var i = 0, len = this.users.length; i < len; i++) {
+      if (this.users[i].userId === Meteor.userId()) {
+        index = i;
+        break;
+      }
+    }
+  	return (this.currCapacity < this.capacity) && (index === -1) && (currentUser.currTrip === null);
+  },
+  hasUsers() {
+  	return this.users.length > 0;
+  },
+  isAdmin(currentUser) {
+  	return currentUser.admin;
+  },
+  isNotAdmin(currentUser) {
+  	return !currentUser.admin;
+  },
+  spotsRemaining() {
+  	return this.capacity - this.currCapacity;
+  },
 });
