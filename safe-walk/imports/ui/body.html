@@ -6,13 +6,9 @@
        {{> Cas_Login }}
       <div class="card teal hoverable">
         <div class="card-content white-text">
-          <span class="card-title">User Info</span>
-          <a id="editUserButton" class="btn-flat waves-effect waves-light" href="#modal1"><i class="material-icons">mode_edit</i></a>
-          <hr>
-          <p>Username:</p>
-          {{currentUser.profile.name}}
-          <p>Address:</p>
-          {{currentUser.homeAddress}}
+          <p class="valign-wrapper"><i class="small material-icons">perm_identity</i>{{currentUser.profile.name}}</p>
+          <p class="valign-wrapper"><i class="small material-icons">navigation</i>{{currentUser.homeAddress}}</p>
+          <a id="editUserButton" class="right btn-floating waves-effect waves-light white black-text" href="#modal1"><i class="edit-button material-icons">mode_edit</i></a>
         </div>
       </div>
 
@@ -20,13 +16,9 @@
       <div class="card teal hoverable">
         <div class="card-content white-text">
           <span class="card-title">My Trip</span>
-          <hr>
-          <p>Departure Time:</p>
-          {{getTripTimeById currentUser.currTrip}}
-          <p>Mode:</p>
-          {{getTripTypeById currentUser.currTrip}}
-          <p>Starting Location:</p>
-          {{getTripStartingAddressById currentUser.currTrip}}
+          <p class="valign-wrapper"><i class="small material-icons">schedule</i>{{getTripTimeById currentUser.currTrip}}</p>
+          <p class="valign-wrapper"><i class="small material-icons">supervisor_account</i>{{getTripTypeById currentUser.currTrip}}</p>
+          <p class="valign-wrapper"><i class="small material-icons">navigation</i>{{getTripStartingAddressById currentUser.currTrip}}</p>
         </div>
       </div>
       {{/if}}
