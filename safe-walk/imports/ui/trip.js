@@ -13,7 +13,7 @@ Template.trip.events({
   'click .register'() {
   	var newCapacity = this.currCapacity+1;
   	var newUsers = this.users;
-  	Meteor.call('trips.update', this._id, newCapacity, newUsers, Meteor.user().homeAddress, Meteor.user().username);
+  	Meteor.call('trips.update', this._id, newCapacity, newUsers, Meteor.user().homeAddress, Meteor.user().profile.name);
    	Materialize.toast('Spot requested', 4000)
   },
   'click .deregister'() {

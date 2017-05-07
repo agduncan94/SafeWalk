@@ -4,6 +4,8 @@ import { Template } from 'meteor/templating';
 import { Trips } from '../api/trips.js';
 
 import './trip.js';
+import './cas-login.html';
+import './cas-login.js';
 import './body.html';
 
 Template.body.onCreated(function bodyOnCreated() {

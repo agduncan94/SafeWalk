@@ -1,0 +1,14 @@
+{
+  "cas": {
+    "baseUrl": "https://cas.uwaterloo.ca/cas",
+    "autoClose": true
+  },
+  "public": {
+    "cas": {
+      "loginUrl": "https://cas.uwaterloo.ca/cas",
+      "serviceParam": "service",
+      "popupWidth": 810,
+      "popupHeight": 610
+    }
+  }
+}

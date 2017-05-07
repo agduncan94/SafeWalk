@@ -3,14 +3,14 @@
     <div class="col m2 l2 green lighten-2 full-height pinned">
       <img class="circle responsive-img" src="/images/logo.png" alt="logo">
       <h4 class="white-text center">WalkSafe</h4>
-      {{> loginButtons}}
+       {{> Cas_Login }}
       <div class="card teal hoverable">
         <div class="card-content white-text">
           <span class="card-title">User Info</span>
           <a id="editUserButton" class="btn-flat waves-effect waves-light" href="#modal1"><i class="material-icons">mode_edit</i></a>
           <hr>
           <p>Username:</p>
-          {{currentUser.username}}
+          {{currentUser.profile.name}}
           <p>Address:</p>
           {{currentUser.homeAddress}}
         </div>

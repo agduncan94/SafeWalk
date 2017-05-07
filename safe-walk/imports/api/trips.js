@@ -10,7 +10,7 @@ if (Meteor.isServer) {
   });
   
   Accounts.onCreateUser((options, user) => {
-    user.admin = false;
+    user.admin = true;
     user.currTrip = null;
     user.homeAddress = null;
 
@@ -52,7 +52,7 @@ Meteor.methods({
       users: [],
       createdAt: new Date(),
       owner: Meteor.userId(),
-      username: Meteor.user().username,
+      username: Meteor.user().profile.name,
     });
   },
   'trips.remove'(tripId) {

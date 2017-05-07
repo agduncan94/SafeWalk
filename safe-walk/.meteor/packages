@@ -22,3 +22,5 @@ accounts-ui
 accounts-password
 mrt:moment
 alexgreg:materialize-clockpicker
+atoy40:accounts-cas
+random
