@@ -1,15 +1,29 @@
 <body>
   <div class="row no-margin">
-    <div class="col m2 l2 teal darken-3 full-height pinned">
+    <div class="col m2 l2 green lighten-2 full-height pinned">
       <img class="logo" src="/images/logo.png" alt="logo">
       <h4 class="white-text center">WalkSafe</h4>
       {{> loginButtons}}
-      <div class="collection no-border">
-       <a href="trips" class="collection-item teal darken-3 white-text no-border">All Trips</a>
-       <a href="about" class="collection-item teal darken-3 white-text no-border">About</a>
-     </div>
+      <div class="card teal hoverable">
+        <div class="card-content white-text">
+          <span class="card-title">User Info</span>
+          <hr>
+          <p>Username: {{currentUser.username}}</p>
+          <p>Address:</p>
+          <p>Email:</p>
+        </div>
+      </div>
+
+      <div class="card teal hoverable">
+        <div class="card-content white-text">
+          <span class="card-title">My Trip</span>
+          <hr>
+          <p>Departure Time:</p>
+          <p>Mode:</p>
+        </div>
+      </div>
    </div>
-   <div class="col m10 l10 blue-grey lighten-4 full-height float-right">
+   <div class="col m10 l10 green lighten-4 full-height float-right">
     <h1 class="flow-text">{{formatDate}}</h1>
     <ul class="collapsible hoverable" data-collapsible="accordion">
       <li>
@@ -45,7 +59,7 @@
     {{/each}}
   </div>
 </div>
-<footer class="page-footer teal darken-5">
+<footer class="page-footer green lighten-2">
   <div class="footer-copyright">
     <div class="container"></div>
   </div>         
